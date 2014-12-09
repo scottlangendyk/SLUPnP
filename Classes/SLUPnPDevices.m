@@ -11,12 +11,12 @@
 
 @implementation SLUPnPDevices
 
-- (id)initWithDevicesSet:(NSSet *)devicesSet
+- (id)initWithDevices:(NSArray *)devices
 {
     self = [super init];
     
     if (self) {
-        devices = devicesSet;
+        _devices = devices;
     }
     
     return self;
@@ -29,7 +29,7 @@
     self = [super init];
     
     if (self) {
-        devices = [aDecoder decodeObjectForKey:@"devices"];
+        _devices = [aDecoder decodeObjectForKey:@"devices"];
     }
     
     return self;
@@ -37,17 +37,17 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:devices forKey:@"devices"];
+    [aCoder encodeObject:_devices forKey:@"devices"];
 }
 
-- (NSSet *)allDevices
+- (NSArray *)allDevices
 {
-    return [[NSSet alloc] initWithSet:devices];
+    return [[NSArray alloc] initWithArray:_devices];
 }
 
 - (SLUPnPDevice *)deviceWithUDN:(NSString *)UDN
 {
-    for (SLUPnPDevice *device in devices) {
+    for (SLUPnPDevice *device in _devices) {
         if ([[device UDN] isEqualToString:UDN]) {
             return device;
         }
@@ -60,13 +60,23 @@
 {
     NSMutableSet *devicesSet = [[NSMutableSet alloc] init];
     
-    for (SLUPnPDevice *device in devices) {
+    for (SLUPnPDevice *device in _devices) {
         if ([[device deviceType] isEqualToString:deviceType]) {
             [devicesSet addObject:device];
         }
     }
     
     return devicesSet;
+}
+
+- (NSUInteger)count
+{
+    return [_devices count];
+}
+
+- (SLUPnPDevice *)deviceAtIndex:(NSUInteger)index
+{
+    return [_devices objectAtIndex:index];
 }
 
 @end

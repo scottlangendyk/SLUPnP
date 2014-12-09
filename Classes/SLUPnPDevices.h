@@ -11,14 +11,17 @@
 @class SLUPnPDevice;
 
 @interface SLUPnPDevices : NSObject <NSCoding> {
-    NSSet *devices;
+    NSArray *_devices;
 }
 
-- (id)initWithDevicesSet:(NSSet *)devicesSet;
+- (id)initWithDevices:(NSArray *)devices;
 
-- (NSSet *)allDevices;
+- (NSArray *)allDevices;
 
 - (SLUPnPDevice *)deviceWithUDN:(NSString *)UDN;
 - (NSSet *)devicesWithType:(NSString *)deviceType;
+
+- (NSUInteger)count;
+- (SLUPnPDevice *)deviceAtIndex:(NSUInteger)index;
 
 @end

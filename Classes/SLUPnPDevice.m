@@ -82,12 +82,12 @@
     _currentValue = [[NSMutableString alloc] init];
     
     if ([elementName isEqualToString:@"deviceList"]) {
-        _devicesSet = [[NSMutableSet alloc] init];
+        _devices = [[NSMutableArray alloc] init];
     } else if ([elementName isEqualToString:@"serviceList"]) {
         _servicesSet = [[NSMutableSet alloc] init];
-    } else if ([elementName isEqualToString:@"device"] && _devicesSet) {
+    } else if ([elementName isEqualToString:@"device"] && _devices) {
         SLUPnPDevice *device = [[SLUPnPDevice alloc] initWithParentDevice:self];
-        [_devicesSet addObject:device];
+        [_devices addObject:device];
         [parser setDelegate:device];
     } else if ([elementName isEqualToString:@"service"] && _servicesSet) {
         SLUPnPService *service = [[SLUPnPService alloc] initWithDevice:self];
@@ -101,8 +101,8 @@
     NSString *value = [[NSString alloc] initWithString:_currentValue];
     
     if ([elementName isEqualToString:@"deviceList"]) {
-        _childDevices = [[SLUPnPDevices alloc] initWithDevicesSet:_devicesSet];
-        _devicesSet = nil;
+        _childDevices = [[SLUPnPDevices alloc] initWithDevices:_devices];
+        _devices = nil;
     } else if ([elementName isEqualToString:@"serviceList"]) {
         _services = [[SLUPnPServices alloc] initWithServicesSet:_servicesSet];
         _servicesSet = nil;
