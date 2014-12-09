@@ -20,6 +20,6 @@ Pod::Spec.new do |s|
     ss.source_files = "Classes/HTTP/*.{h,m}"
   end
 
-  s.dependency "CocoaAsyncSocket", "~> 7.4"
+  s.dependency "CocoaAsyncSocket", "~> 7.3"
   s.dependency "AFNetworking",     "~> 2.4"
 end
