@@ -84,14 +84,14 @@
     if ([elementName isEqualToString:@"deviceList"]) {
         _devices = [[NSMutableArray alloc] init];
     } else if ([elementName isEqualToString:@"serviceList"]) {
-        _servicesSet = [[NSMutableSet alloc] init];
+        _servicesArray = [[NSMutableArray alloc] init];
     } else if ([elementName isEqualToString:@"device"] && _devices) {
         SLUPnPDevice *device = [[SLUPnPDevice alloc] initWithParentDevice:self];
         [_devices addObject:device];
         [parser setDelegate:device];
-    } else if ([elementName isEqualToString:@"service"] && _servicesSet) {
+    } else if ([elementName isEqualToString:@"service"] && _servicesArray) {
         SLUPnPService *service = [[SLUPnPService alloc] initWithDevice:self];
-        [_servicesSet addObject:service];
+        [_servicesArray addObject:service];
         [parser setDelegate:service];
     }
 }
@@ -104,8 +104,8 @@
         _childDevices = [[SLUPnPDevices alloc] initWithDevices:_devices];
         _devices = nil;
     } else if ([elementName isEqualToString:@"serviceList"]) {
-        _services = [[SLUPnPServices alloc] initWithServicesSet:_servicesSet];
-        _servicesSet = nil;
+        _services = [[SLUPnPServices alloc] initWithServices:_servicesArray];
+        _servicesArray = nil;
     } else if ([elementName isEqualToString:@"device"]) {
         [parser setDelegate:_parentDevice];
     } else if ([elementName isEqualToString:@"deviceType"]) {

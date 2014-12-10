@@ -12,7 +12,7 @@
 
 @interface SLUPnPDevice : NSObject <NSXMLParserDelegate, NSCoding> {
     NSMutableString *_currentValue;
-    NSMutableSet *_servicesSet;
+    NSMutableArray *_servicesArray;
     NSMutableArray *_devices;
 }
 

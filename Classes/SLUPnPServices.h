@@ -11,14 +11,17 @@
 @class SLUPnPService;
 
 @interface SLUPnPServices : NSObject <NSCoding> {
-    NSSet *services;
+    NSArray *_services;
 }
 
-- (id)initWithServicesSet:(NSSet *)servicesSet;
+- (id)initWithServices:(NSArray *)services;
 
-- (NSSet *)allServices;
+- (NSArray *)allServices;
 
 - (SLUPnPService *)serviceWithID:(NSString *)serviceID;
 - (NSSet *)servicesWithType:(NSString *)serviceType;
+
+- (NSUInteger)count;
+- (SLUPnPService *)serviceAtIndex:(NSUInteger)index;
 
 @end

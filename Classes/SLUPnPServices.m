@@ -11,12 +11,12 @@
 
 @implementation SLUPnPServices
 
-- (id)initWithServicesSet:(NSSet *)servicesSet
+- (id)initWithServices:(NSArray *)services
 {
     self = [super init];
     
     if (self) {
-        services = servicesSet;
+        _services = services;
     }
     
     return self;
@@ -29,7 +29,7 @@
     self = [super init];
     
     if (self) {
-        services = [aDecoder decodeObjectForKey:@"services"];
+        _services = [aDecoder decodeObjectForKey:@"services"];
     }
     
     return self;
@@ -37,17 +37,17 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:services forKey:@"services"];
+    [aCoder encodeObject:_services forKey:@"services"];
 }
 
-- (NSSet *)allServices
+- (NSArray *)allServices
 {
-    return [[NSSet alloc] initWithSet:services];
+    return [[NSArray alloc] initWithArray:_services];
 }
 
 - (SLUPnPService *)serviceWithID:(NSString *)serviceID
 {
-    for (SLUPnPService *service in services) {
+    for (SLUPnPService *service in _services) {
         if ([[service serviceId] isEqualToString:serviceID]) {
             return service;
         }
@@ -60,13 +60,23 @@
 {
     NSMutableSet *servicesSet = [[NSMutableSet alloc] init];
     
-    for (SLUPnPService *service in services) {
+    for (SLUPnPService *service in _services) {
         if ([[service serviceType] isEqualToString:serviceType]) {
             [servicesSet addObject:service];
         }
     }
     
     return servicesSet;
+}
+
+- (NSUInteger)count
+{
+    return [_services count];
+}
+
+- (SLUPnPService *)serviceAtIndex:(NSUInteger)index
+{
+    return [_services objectAtIndex:index];
 }
 
 @end
